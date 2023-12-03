@@ -1,4 +1,4 @@
-import { returnNumbers, combineFirstAndLast } from "./page";
+import { returnNumbers, combineFirstAndLast, findCalibrationValues } from "./page";
 
 describe("Day One", () => {
     it('should return all numbers in a string', () => {
@@ -19,4 +19,12 @@ describe("Day One", () => {
 
         expect(actual).toEqual(expected)
     });
+    it('should take in a list of test words and output the sum', ()=>{
+        const testWordArray = ["1abc2","a2c"]
+        const expected = 34
+
+        const actual = findCalibrationValues(testWordArray)
+
+        expect(actual).toEqual(expected)
+    })
 })
