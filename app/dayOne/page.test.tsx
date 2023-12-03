@@ -1,4 +1,4 @@
-import { returnNumbers, combineFirstAndLast, findCalibrationValues,convertWordsToNumbers  } from "./page";
+import { returnNumbers, combineFirstAndLast, findCalibrationValues, extractNumbersFromStringArray, reverseString, getFirstNumber, getSecondNumber } from "./page";
 
 describe("Day One", () => {
     describe("part one", () => {
@@ -28,6 +28,7 @@ describe("Day One", () => {
 
             expect(actual).toEqual(expected)
         })
+
     })
 
     describe('part two', () => {
@@ -43,20 +44,71 @@ describe("Day One", () => {
                 "eight",
                 "nine"
             ]
-            const expected = ["1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"]
+            const expected = ["11",
+                "22",
+                "33",
+                "44",
+                "55",
+                "66",
+                "77",
+                "88",
+                "99"]
 
-            const actual = convertWordsToNumbers(testWords)
-            console.log(actual)
+            const actual = extractNumbersFromStringArray(testWords)
             expect(actual).toEqual(expected)
 
         })
+        it('should handle two words in same string', () => {
+            const testWords = [
+                "nkzjrdqrmpztpqninetwofour1znnkd"
+            ]
+            // const testWords = ["one2two"]
+            const expected = ["91"]
+
+            const actual = extractNumbersFromStringArray(testWords)
+            // console.log(actual)
+            expect(actual).toEqual(expected)
+
+        })
+
+        it('should give the proper sum', () => {
+            const testWords = [
+                "two1nine",
+                "eightwothree",
+                "abcone2threexyz",
+                "xtwone3four",
+                "4nineeightseven2",
+                "zoneight234",
+                "7pqrstsixteen",
+                "oneight"
+            ]
+            const expected = 281 + 18
+            const converted = extractNumbersFromStringArray(testWords)
+            const actual = findCalibrationValues(extractNumbersFromStringArray(testWords))
+            expect(actual).toEqual(expected)
+
+        })
+
+        it('should return the first number in string', () => {
+            const testWord = "oneight"
+            const expected = "1"
+            const actual = getFirstNumber(testWord)
+            expect(actual).toEqual(expected)
+        })
+        it('should return the second number in string', () => {
+            const testWord = "oneight"
+            const expected = "8"
+            const actual = getSecondNumber(testWord)
+            expect(actual).toEqual(expected)
+        })
+        it('should reverse a string', () => {
+            const testWord = "oneight"
+            const expected = "thgieno"
+            const actual = reverseString(testWord)
+            expect(actual).toEqual(expected)
+        })
+        it('should combine first and second number', () => {
+            
+        });
     })
 })
