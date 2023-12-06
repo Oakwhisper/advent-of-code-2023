@@ -1,4 +1,4 @@
-import { findHighestPulls, importFromFile } from "./page";
+import { findHighestPulls, getPossibleGames, importFromFile } from "./page";
 
 describe('Day Two', () => {
     describe('part one', () => {
@@ -46,6 +46,16 @@ describe('Day Two', () => {
 
             expect(actual).toEqual(expected)
 
+        })
+
+        it('should return gameIds for possible games', async ()=>{
+            const gameInfo = await importFromFile("testFile2.txt")
+            const requirement = {red: 12, blue: 14, green: 13}
+            const expected = [1,2,5]
+
+            const actual = getPossibleGames(requirement, gameInfo)
+
+            expect(actual).toEqual(expected)
         })
     })
 })
