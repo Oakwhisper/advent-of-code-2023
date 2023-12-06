@@ -5,7 +5,10 @@ import readline from 'readline'
 
 export default function DayTwo() {
     return (
-        <div>DayTwo</div>
+        <>
+            <h1>Day Two</h1>
+            <div>Your part 1 answer is: {getPart1Answer()}</div>
+        </>
     )
 }
 
@@ -25,7 +28,7 @@ type Results = {
 
 export async function importFromFile(fileName: string) {
     let gameData: GameInfo[] = []
-    const formattedPath = path.join(__dirname, fileName)
+    const formattedPath = path.resolve("app/dayTwo", fileName)
     const fileStream = fs.createReadStream(formattedPath)
     const readLine = readline.createInterface({
         input: fileStream,
@@ -81,9 +84,9 @@ export function findHighestPulls(gameData: GameInfo[]) {
         let maxGreen = 0
         for (let j = 0; j < gameData[i].results.length; j++) {
             const pull = gameData[i].results[j].pull
-            maxBlue = newFunction(maxBlue, pull.blue, i, j)
-            maxRed = newFunction(maxRed, pull.red, i, j)
-            maxGreen = newFunction(maxGreen, pull.green, i, j)
+            maxBlue = pickLargest(maxBlue, pull.blue, i, j)
+            maxRed = pickLargest(maxRed, pull.red, i, j)
+            maxGreen = pickLargest(maxGreen, pull.green, i, j)
 
         }
         highestPulls.push({
@@ -94,7 +97,7 @@ export function findHighestPulls(gameData: GameInfo[]) {
 
     return highestPulls
 
-    function newFunction(maxColor: number, color: number, i: number, j: number): number {
+    function pickLargest(maxColor: number, color: number, i: number, j: number): number {
         return maxColor > color ? maxColor : color
     }
 }
@@ -104,12 +107,36 @@ export function getPossibleGames(requirement: { red: number, blue: number, green
     const highestPulls = findHighestPulls(gameInfo)
     for (const game of highestPulls) {
         if (
-            game.highestPulls.maxBlue < requirement.blue &&
-            game.highestPulls.maxGreen < requirement.green &&
-            game.highestPulls.maxRed < requirement.red
+            game.highestPulls.maxBlue <= requirement.blue &&
+            game.highestPulls.maxGreen <= requirement.green &&
+            game.highestPulls.maxRed <= requirement.red
         ) {
-possibleGames.push(game.gameId)
+            possibleGames.push(game.gameId)
         }
     }
     return possibleGames
+}
+
+export function sumPossibleIDs(possibleIds: number[]) {
+    return possibleIds.reduce((sum, num) => sum + num)
+}
+
+async function getPart1Answer() {
+    'use server'
+    const gameInfo = await importFromFile('dayTwoPart1Input.txt')
+    const requirement = { red: 12, green: 13, blue: 14, }
+    const possibleIds = getPossibleGames(requirement, gameInfo)
+    const possibleIdSum = sumPossibleIDs(possibleIds)
+    console.log(possibleIdSum)
+    return possibleIdSum
+
+}
+
+export function getPowersForMinPossibilites(gameInfo: GameInfo[]) {
+    let powers: number[] = []
+    const highestPulls = findHighestPulls(gameInfo)
+    for (const game of highestPulls) {
+        powers.push(game.highestPulls.maxBlue*game.highestPulls.maxGreen*game.highestPulls.maxRed)
+    }
+    return powers
 }

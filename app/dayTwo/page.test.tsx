@@ -1,4 +1,4 @@
-import { findHighestPulls, getPossibleGames, importFromFile } from "./page";
+import { findHighestPulls, getPowersForMinPossibilites, getPossibleGames, importFromFile, sumPossibleIDs } from "./page";
 
 describe('Day Two', () => {
     describe('part one', () => {
@@ -48,14 +48,41 @@ describe('Day Two', () => {
 
         })
 
-        it('should return gameIds for possible games', async ()=>{
+        it('should return gameIds for possible games', async () => {
             const gameInfo = await importFromFile("testFile2.txt")
-            const requirement = {red: 12, blue: 14, green: 13}
-            const expected = [1,2,5]
+            const requirement = { red: 12, blue: 14, green: 13 }
+            const expected = [1, 2, 5]
 
             const actual = getPossibleGames(requirement, gameInfo)
 
             expect(actual).toEqual(expected)
         })
+        it('should return sum of Ids possible games', async () => {
+            const possibleIds = [1, 2, 5]
+            const expected = 8
+
+            const actual = sumPossibleIDs(possibleIds)
+
+            expect(actual).toEqual(expected)
+        })
+    })
+
+    describe('part two', () => {
+        it('should calculate the power of the lowest possible values', () => {
+            const testCase = [{
+                gameId: 1,
+                results: [
+                    { pullId: 1, pull: { blue: 3, red: 4, green: 0 } },
+                    { pullId: 2, pull: { blue: 6, red: 1, green: 2 } },
+                    { pullId: 3, pull: { blue: 0, red: 0, green: 2 } }
+                ]
+            }]
+
+            const expected = [48]
+
+            const actual = getPowersForMinPossibilites(testCase)
+
+            expect(actual).toEqual(expected)
+        });
     })
 })
