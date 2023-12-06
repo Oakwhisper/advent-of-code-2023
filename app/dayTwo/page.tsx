@@ -11,15 +11,15 @@ export default function DayTwo() {
 
 type GameInfo = {
     gameId: number,
-    results?: Results[]
+    results: Results[]
 }
 
 type Results = {
     pullId: number,
     pull: {
-        blue?: number,
-        red?: number,
-        green?: number,
+        blue: number,
+        red: number,
+        green: number,
     }
 }
 
@@ -70,5 +70,31 @@ function getResultsOfPulls(splitByPulls: string[], results: Results[]) {
                 green: parseInt(green[0]),
             }
         })
+    }
+}
+
+export function findHighestPulls(gameData: GameInfo[]) {
+    let highestPulls = []
+    for (let i = 0; i< gameData.length; i++){
+        let maxBlue = 0
+        let maxRed =0
+        let maxGreen = 0
+        for (let j = 0; j< gameData[i].results.length; j++) {
+            const pull = gameData[i].results[j].pull
+            maxBlue = newFunction(maxBlue,pull.blue, i, j)
+            maxRed = newFunction(maxRed,pull.red, i, j)
+            maxGreen = newFunction(maxGreen,pull.green, i, j)
+
+        }
+        highestPulls.push({
+            gameId: gameData[i].gameId,
+            highestPulls: {maxBlue: maxBlue, maxRed: maxRed, maxGreen: maxGreen}
+        })
+    }
+
+    return highestPulls
+
+    function newFunction(maxColor: number, color: number, i: number, j: number): number {
+        return maxColor > color ? maxColor : color
     }
 }
