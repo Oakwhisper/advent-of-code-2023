@@ -41,14 +41,13 @@ export function extractNumbersFromStringArray(array: string[]) {
     const secondNumber = getSecondNumber(element)
     return firstNumber + secondNumber
   })
-
 }
 
 function convertWordToNumberForward(element: string) {
   const splitElement = element.split(/(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)/g)
   const filteredSplitElement = splitElement.filter(n => n)
 
-  const temp = filteredSplitElement.map((element) => {
+  return filteredSplitElement.map((element) => {
     return element.replace(/one/g, '1')
       .replace(/two/g, '2')
       .replace(/three/g, '3')
@@ -59,7 +58,6 @@ function convertWordToNumberForward(element: string) {
       .replace(/eight/g, '8')
       .replace(/nine/g, '9')
   }).join('')
-  return temp
 }
 
 function convertWordToNumberReverse(element: string) {
@@ -67,7 +65,8 @@ function convertWordToNumberReverse(element: string) {
   const splitElement = reversedElement.split(/(eno)|(owt)|(eerht)|(ruof)|(evif)|(xis)|(neves)|(thgie)|(enin)/g)
   const filteredSplitElement = splitElement.filter(n => n)
 
-  const temp = filteredSplitElement.map((element) => {
+
+  return filteredSplitElement.map((element) => {
     return element.replace(/eno/g, '1')
       .replace(/owt/g, '2')
       .replace(/eerht/g, '3')
@@ -78,9 +77,6 @@ function convertWordToNumberReverse(element: string) {
       .replace(/thgie/g, '8')
       .replace(/enin/g, '9')
   }).join('')
-
-  console.log(temp)
-  return temp
 }
 
 export function getFirstNumber(string: string) {
