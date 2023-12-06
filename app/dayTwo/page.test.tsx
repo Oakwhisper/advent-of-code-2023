@@ -1,4 +1,4 @@
-import { findHighestPulls, getPowersForMinPossibilites, getPossibleGames, importFromFile, sumPossibleIDs } from "./page";
+import { findHighestPulls, getPowersForMinPossibilites, getPossibleGames, importFromFile, sumArray } from "./page";
 
 describe('Day Two', () => {
     describe('part one', () => {
@@ -61,7 +61,7 @@ describe('Day Two', () => {
             const possibleIds = [1, 2, 5]
             const expected = 8
 
-            const actual = sumPossibleIDs(possibleIds)
+            const actual = sumArray(possibleIds)
 
             expect(actual).toEqual(expected)
         })

@@ -8,6 +8,7 @@ export default function DayTwo() {
         <>
             <h1>Day Two</h1>
             <div>Your part 1 answer is: {getPart1Answer()}</div>
+            <div>Your part 2 answer is: {getPart2Answer()}</div>
         </>
     )
 }
@@ -117,7 +118,7 @@ export function getPossibleGames(requirement: { red: number, blue: number, green
     return possibleGames
 }
 
-export function sumPossibleIDs(possibleIds: number[]) {
+export function sumArray(possibleIds: number[]) {
     return possibleIds.reduce((sum, num) => sum + num)
 }
 
@@ -126,7 +127,17 @@ async function getPart1Answer() {
     const gameInfo = await importFromFile('dayTwoPart1Input.txt')
     const requirement = { red: 12, green: 13, blue: 14, }
     const possibleIds = getPossibleGames(requirement, gameInfo)
-    const possibleIdSum = sumPossibleIDs(possibleIds)
+    const possibleIdSum = sumArray(possibleIds)
+    console.log(possibleIdSum)
+    return possibleIdSum
+
+}
+
+async function getPart2Answer() {
+    'use server'
+    const gameInfo = await importFromFile('dayTwoPart1Input.txt')
+    const possibleIds = getPowersForMinPossibilites(gameInfo)
+    const possibleIdSum = sumArray(possibleIds)
     console.log(possibleIdSum)
     return possibleIdSum
 
@@ -136,7 +147,7 @@ export function getPowersForMinPossibilites(gameInfo: GameInfo[]) {
     let powers: number[] = []
     const highestPulls = findHighestPulls(gameInfo)
     for (const game of highestPulls) {
-        powers.push(game.highestPulls.maxBlue*game.highestPulls.maxGreen*game.highestPulls.maxRed)
+        powers.push(game.highestPulls.maxBlue * game.highestPulls.maxGreen * game.highestPulls.maxRed)
     }
     return powers
 }
