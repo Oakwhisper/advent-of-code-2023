@@ -128,7 +128,7 @@ async function getPart1Answer() {
     const requirement = { red: 12, green: 13, blue: 14, }
     const possibleIds = getPossibleGames(requirement, gameInfo)
     const possibleIdSum = sumArray(possibleIds)
-    console.log(possibleIdSum)
+
     return possibleIdSum
 
 }
@@ -138,7 +138,7 @@ async function getPart2Answer() {
     const gameInfo = await importFromFile('dayTwoPart1Input.txt')
     const possibleIds = getPowersForMinPossibilites(gameInfo)
     const possibleIdSum = sumArray(possibleIds)
-    console.log(possibleIdSum)
+
     return possibleIdSum
 
 }
