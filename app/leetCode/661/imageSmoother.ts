@@ -1,5 +1,4 @@
 export default function imageSmoother(img: number[][]): number[][] {
-    const point: Point = {row: 1, column: 1}
     let newimg = [[0, 0, 0], [0, getAverage({row: 1, column: 1}, img), 0], [0, 0, 0]]
 
     return newimg
@@ -14,7 +13,7 @@ function getAverage(point: Point, image: number[][]) {
         }
     }
 
-    return sum/9
+    return Math.floor(sum/9)
 }
 
 type Point = {
